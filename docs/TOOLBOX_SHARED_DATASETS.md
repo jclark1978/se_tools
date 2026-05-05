@@ -51,7 +51,6 @@ Rules:
 - `data.rows` stores milestone rows, not product summary rows.
 - Hardware `release` is always an empty string.
 - Valid milestones are `End of Order`, `Last Service Extension`, `End of Support`, or an empty string for placeholder rows.
-- Freshness-sensitive tools should reject or warn on lifecycle data older than 30 days.
 
 ## Plugin Storage
 

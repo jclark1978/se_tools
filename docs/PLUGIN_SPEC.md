@@ -48,9 +48,12 @@ Required fields:
 - `fabricbomPlugin`: must be `true`.
 - `name`: display name.
 - `category`: sidebar group such as `Reports`, `Tools`, or `Data`.
-- `icon`: FabricBOM-supported icon name such as `report`, `database`, `chart`, `tracker`, or `gear`.
 - `version`: plugin version.
 - `description`: short user-facing summary.
+
+Recommended fields:
+
+- `icon`: FabricBOM-supported icon name such as `report`, `database`, `chart`, `tracker`, or `gear`. FabricBOM will use a default icon if omitted.
 
 ## Dependency Rules
 

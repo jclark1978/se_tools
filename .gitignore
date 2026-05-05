@@ -1,6 +1,3 @@
-.deploy_keys/*
-!.deploy_keys/README.md
-
 .DS_Store
 Thumbs.db
 
