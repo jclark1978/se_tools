@@ -9,7 +9,7 @@ npm run validate    # Validate all plugins and check manifest is current
 npm run manifest    # Regenerate PLUGIN_MANIFEST.md from plugin metadata
 ```
 
-Run `validate` before any commit that touches `plugins/` or `PLUGIN_MANIFEST.md`. If it reports a stale manifest, run `manifest` first.
+Requires Node.js 20+. Run `validate` before any commit that touches `plugins/` or `PLUGIN_MANIFEST.md`. If it reports a stale manifest, run `manifest` first. CI runs `validate` on every push and pull request.
 
 ## Architecture
 
@@ -17,7 +17,9 @@ This repo produces **self-contained single-file HTML plugins** for FabricBOM, a 
 
 ### Plugin anatomy
 
-Each plugin embeds its own CSS, JS, and any third-party libraries inline. It declares metadata in a `<script type="application/json" id="fabricbom-plugin-meta">` block (see [docs/PLUGIN_SPEC.md](docs/PLUGIN_SPEC.md) for required fields).
+Each plugin embeds its own CSS, JS, and any third-party libraries inline. It declares metadata in a `<script type="application/json" id="fabricbom-plugin-meta">` block. Required metadata fields: `fabricbomPlugin: true`, `name`, `category`, `version`, `description`. Optional: `icon` (`report`, `database`, `chart`, `tracker`, `gear`).
+
+`validate-plugins.mjs` enforces these structural rules — a plugin fails if it contains a `<link>` tag, a `<script src="...">` tag, a `type="module"` script, or a relative `href`/`src` path (`../`).
 
 `localStorage` is the persistence layer. All plugin-owned keys must be prefixed `fabricbom_`. Shared cross-plugin datasets (e.g. `hardware_lifecycle`) follow the normalized record schema in [docs/TOOLBOX_SHARED_DATASETS.md](docs/TOOLBOX_SHARED_DATASETS.md).
 
@@ -32,7 +34,7 @@ Plugins also have full read/write access to the host's `localStorage` and Indexe
 
 ### Scripts
 
-`scripts/plugin-utils.mjs` is the shared library used by both `generate-manifest.mjs` and `validate-plugins.mjs`. It parses plugin metadata, checks structural rules (no external deps, required metadata fields), and builds the manifest table.
+`scripts/plugin-utils.mjs` is the shared library for both `generate-manifest.mjs` and `validate-plugins.mjs`. It exposes `listPluginFiles`, `readPluginMetadata` (parses + validates each plugin), and `buildManifest` (renders the markdown table).
 
 `PLUGIN_MANIFEST.md` is generated — do not edit it by hand.
 
