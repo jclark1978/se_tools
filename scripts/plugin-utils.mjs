@@ -5,10 +5,18 @@ export const MANIFEST_FILE = "PLUGIN_MANIFEST.md";
 
 export function listPluginFiles(root) {
   const pluginDir = path.join(root, "plugins");
-  return fs.readdirSync(pluginDir)
-    .filter((file) => file.endsWith(".html"))
-    .sort((left, right) => left.localeCompare(right))
-    .map((file) => path.join(pluginDir, file));
+  const found = [];
+
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.isFile() && entry.name.endsWith(".html")) found.push(full);
+    }
+  }
+  walk(pluginDir);
+
+  return found.sort((left, right) => left.localeCompare(right));
 }
 
 export function readPluginMetadata(root, file) {
