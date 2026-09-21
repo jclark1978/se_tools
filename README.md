@@ -5,7 +5,7 @@ A collection of portable SE tools packaged as self-contained single-file HTML pl
 ## Repository Layout
 
 ```text
-plugins/       Installable single-file HTML plugins
+plugins/       Installable single-file HTML plugins, one subfolder per plugin
 docs/          Plugin, data, and UI specifications
 checklists/    Release and validation checklists
 ```
@@ -14,7 +14,8 @@ checklists/    Release and validation checklists
 
 | Plugin | Description |
 | --- | --- |
-| `plugins/asset-report-plugin.html` | Cleans customer asset workbooks and exports an Excel asset report with Hardware LifeCycle milestones. |
+| `plugins/asset-report-plugin/asset-report-plugin.html` | Cleans customer asset workbooks and exports an Excel asset report with Hardware LifeCycle milestones. |
+| `plugins/renewal-pdf-to-excel/renewal-pdf-to-excel.html` | Converts a Fortinet renewal quote PDF (SKU/coterm-group or serial-number layout) into a working Excel spreadsheet with a filterable table and sortable dates. |
 
 ## Plugin Rules
 
